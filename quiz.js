@@ -138,13 +138,22 @@ const quesJSON = [
 
 let score = 0;
 let currentQuestion = 0;
+const totalScore=quesJSON.length;
 
 //Accessing all the elements:
 const questionEl = document.getElementById("question");
 const optionEl = document.getElementById("options");
 const scoreEl = document.getElementById("score");
+const nextEl=document.getElementById('next');
 
 showQuestion();
+
+// Adding event listner to the skip button 
+nextEl.addEventListener('click',  ()=>{
+  scoreEl.textContent = `Score: ${score}/ ${totalScore}`;
+  nextOuestion();
+})
+
 function showQuestion() {
   // Destructuring the object
   const { correctAnswer, options, question } = quesJSON[currentQuestion];
@@ -168,7 +177,7 @@ function showQuestion() {
         score = score - 0.25;
       }
 
-      scoreEl.textContent = `Score: ${score}`;
+      scoreEl.textContent = `Score: ${score}/ ${totalScore}`;
       nextOuestion();
     });
   });
@@ -180,6 +189,7 @@ function nextOuestion() {
   optionEl.textContent = "";
   if (currentQuestion >= quesJSON.length) {
     questionEl.textContent = "Quiz Completed!!";
+     nextEl.remove();
   } else {
     showQuestion();
   }
@@ -193,5 +203,4 @@ function shuffleOptions(options) {
   }
   return options;
 }
-
-//   shuffleOptions([1, 2, 3, 4, 5]);
+ 
